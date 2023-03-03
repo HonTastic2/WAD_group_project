@@ -1,6 +1,6 @@
 import os
 import random
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tango_with_django_project.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'WAD_group_project.settings')
 
 import django
 django.setup()
