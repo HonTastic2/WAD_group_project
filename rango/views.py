@@ -11,6 +11,16 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 
+def HOMEPAGE(request):
+    print(request.method)
+    print(request.user)
+    context_dict = {}
+
+    visitor_cookie_handler(request)
+    context_dict['visits'] = request.session['visits']
+
+    return render(request, 'rango/HOMEPAGE.html', context=context_dict)
+
 def index(request):
     category_list = Category.objects.order_by('-likes')[:5]
     pages_list = Page.objects.order_by('-views')[:5]
