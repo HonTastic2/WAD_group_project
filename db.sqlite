@@ -1,7 +1,50 @@
-CREATE TABLE Movie/TV (
-    movieID varchar(10) NOT NULL,
-    Title varchar(40),
-    avgRating FLOAT(3),
-    releaseDate Date,
-    PRIMARY KEY (movieID)
+create table main.Genre
+(
+    name varchar(20)
+        primary key
 );
+
+create table main."Movie/TV"
+(
+    movieID     varchar(10)
+        primary key,
+    Title       varchar(100),
+    avgRating   FLOAT(3),
+    releaseDate DATE
+);
+
+create table main.Person
+(
+    userID      varchar(10)
+        primary key,
+    surname     varchar(20),
+    firstname   varchar(20),
+    dateOfBirth DATE
+);
+
+create table main.User
+(
+    username varchar(20)
+        primary key,
+    password varchar(20)
+);
+
+create table main.Rating
+(
+    movieID      varchar(10)
+        references main."Movie/TV",
+    userID       varchar(20)
+        references main.User (userID),
+    numberRating FLOAT(3),
+    dateOfRate   DATE
+);
+
+create table main.sqlite_master
+(
+    type     TEXT,
+    name     TEXT,
+    tbl_name TEXT,
+    rootpage INT,
+    sql      TEXT
+);
+
