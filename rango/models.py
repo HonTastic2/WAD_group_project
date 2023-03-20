@@ -4,25 +4,24 @@ from django.contrib.auth.models import User
 
 slug = models.SlugField(unique=True)
 
-class Category(models.Model):
-    name = models.CharField(max_length=128, unique=True)
-    views = models.IntegerField(default=0)
-    likes = models.IntegerField(default=0)
+class Movie(models.Model):
+    title = models.CharField(max_length=128, unique=True)
+    releaseDate = models.CharField(max_length=128)
     slug = models.SlugField()
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super(Category, self).save(*args, **kwargs)
+        self.slug = slugify(self.title)
+        super(Movie, self).save(*args, **kwargs)
 
     
     class Meta:
-        verbose_name_plural = 'Categories'
+        verbose_name_plural = 'Movies'
     
     def __str__(self):
-        return self.name
+        return self.title
         
 class Page(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Movie, on_delete=models.CASCADE)
     title = models.CharField(max_length=128)
     url = models.URLField()
     views = models.IntegerField(default=0)

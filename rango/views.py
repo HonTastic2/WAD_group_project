@@ -1,12 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from rango.models import Category
-from rango.models import Page
-from rango.forms import CategoryForm
+from rango.models import Movie, Page
 from rango.forms import PageForm
 from django.shortcuts import redirect
 from django.urls import reverse
-from rango.forms import UserForm, UserProfileForm
+from rango.forms import UserForm, UserProfileForm, MovieForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
@@ -14,7 +12,10 @@ from datetime import datetime
 def HOMEPAGE(request):
     print(request.method)
     print(request.user)
+    movie_list = Movie.objects.order_by('title')
+
     context_dict = {}
+    context_dict['movies'] = movie_list
 
     visitor_cookie_handler(request)
     context_dict['visits'] = request.session['visits']
@@ -51,43 +52,43 @@ def about(request):
 
     return render(request, 'rango/about.html', context=context_dict)
 
-def show_category(request, category_name_slug):
+def show_movie(request, movie_name_slug):
     context_dict = {}
 
     try:
-        category = Category.objects.get(slug=category_name_slug)
-        pages = Page.objects.filter(category=category)
+        movie = Movie.objects.get(title=movie_name_slug)
+        pages = Page.objects.filter(category=movie)
 
         context_dict['pages'] = pages
-        context_dict['category'] = category
+        context_dict['movie'] = movie
 
-    except Category.DoesNotExist:
+    except Movie.DoesNotExist:
         context_dict['pages'] = None
-        context_dict['category'] = None
+        context_dict['movie'] = None
     
-    return render(request, 'rango/category.html', context=context_dict)
+    return render(request, 'rango/movie.html', context=context_dict)
 
 @login_required
-def add_category(request):
-    form = CategoryForm()
+def add_movie(request):
+    form = MovieForm()
 
     if request.method == 'POST':
-        form = CategoryForm(request.POST)
+        form = MovieForm(request.POST)
 
         if form.is_valid():
             form.save(commit=True)
-            return redirect('/rango/')
+            return redirect('/rango/HOMEPAGE/')
         
         else:
             print(form.errors)
 
-    return render(request, 'rango/add_category.html', {'form': form})
+    return render(request, 'rango/add_movie.html', {'form': form})
 
 @login_required
 def add_page(request, category_name_slug):
     try:
-        category = Category.objects.get(slug=category_name_slug)
-    except Category.DoesNotExist:
+        category = Movie.objects.get(slug=category_name_slug)
+    except Movie.DoesNotExist:
         category = None
 
     if category is None:
