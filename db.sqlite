@@ -1,0 +1,7 @@
+CREATE TABLE Movie/TV (
+    movieID varchar(10) NOT NULL,
+    Title varchar(40),
+    avgRating FLOAT(3),
+    releaseDate Date,
+    PRIMARY KEY (movieID)
+);
