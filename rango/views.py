@@ -20,20 +20,6 @@ def HOMEPAGE(request):
     context_dict['visits'] = request.session['visits']
 
     return render(request, 'rango/HOMEPAGE.html', context=context_dict)
-
-def index(request):
-    category_list = Category.objects.order_by('-likes')[:5]
-    pages_list = Page.objects.order_by('-views')[:5]
-
-    context_dict = {}
-    context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
-    context_dict['categories'] = category_list
-    context_dict['pages'] = pages_list
-
-    visitor_cookie_handler(request)
-
-    response = render(request, 'rango/index.html', context=context_dict)
-    return response
     
 def get_server_side_cookie(request, cookie, default_val=None):
     val = request.session.get(cookie)
@@ -127,7 +113,7 @@ def add_page(request, category_name_slug):
     context_dict = {'form': form, 'category':category}
     return render(request, 'rango/add_page.html', context=context_dict)
 
-def register(request):
+def signup(request):
     registered = False
 
     if request.method == 'POST':
@@ -155,7 +141,7 @@ def register(request):
         user_form = UserForm()
         profile_form = UserProfileForm()
 
-    return render(request, 'rango/register.html', context = {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
+    return render(request, 'rango/signup.html', context = {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
 
 def user_login(request):
     if request.method == 'POST':
@@ -167,10 +153,10 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return redirect(reverse('rango:index'))
+                return redirect(reverse('rango:HOMEPAGE'))
 
             else:
-                return HttpResponse("Your Rango account is disabled")
+                return HttpResponse("Your account is disabled")
 
         else:
             print(f"Invalid login details: {username}, {password}")
@@ -186,4 +172,4 @@ def restricted(request):
 @login_required
 def user_logout(request):
     logout(request)
-    return redirect(reverse('rango:index'))
+    return redirect(reverse('rango:HOMEPAGE'))

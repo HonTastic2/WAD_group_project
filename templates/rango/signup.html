@@ -1,40 +1,26 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
 
-</head>
+{% block title_block %}
+    Register
+{% endblock %}
 
-<body>
+{% block body_block %}
+<h1>Register for TVRatingSystem</h1>
+{% if user.is_authenticated %}
+Rango says: <strong>thank you for registering!</strong>
+<a href="{% url 'rango:HOMEPAGE' %}">Return to the homepage</a><br />
+{% else %}
 
-    <form id="form"> 
-        <input type="search" id="query" name="q" placeholder="Search...">
-        <button>Search</button>
-      </form>
+<h3>Welcome! Enter your details to create an account to rate, comment on, or add Movies and TV shows!</h3>
 
-    <h3>Welcome! Enter your details to create an account to rate, comment on, or add Movies and TV shows!</h3>
+<form id="user_form" method="post" action="{% url 'rango:signup' %}" enctype="multipart/form-data">
+    {% csrf_token %}
 
-    <form action="" method="post">
+    {{ user_form.as_p }}
+    {{ profile_form.as_p }}
 
-  <div class="container">
-    <label for="uname"><b>Username</b></label>
-    <input type="text" placeholder="Enter Username" name="username" required>
-
-    <label for="psw"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="password" required>
-
-    <button type="submit">Login</button>
-    <label>
-      <input type="checkbox" checked="checked" name="remember"> Remember me
-    </label>
-  </div>
-
-  <div class="container" style="background-color:#f1f1f1">
-    <button type="button" class="cancelbtn">Cancel</button>
-    <span class="psw">Forgot <a href="#">password?</a></span>
-  </div>
-
+    <input type="submit" name="submit" value="Register" />
 </form>
-
-</body>
-
-</html>
+{% endif %}
+{% endblock %}

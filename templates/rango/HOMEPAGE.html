@@ -9,10 +9,17 @@
 
 {% block body_block %}
 
+		<div>
+			{% if user.is_authenticated %}
+				<p> Hi {{ user.username }}! </p>
+			{% endif %}
+		</div>
+
 		<form id="form"> 
 			<input type="search" id="query" name="q" placeholder="Search...">
 			<button>Search</button>
 		</form>
+
 
 		<h3>Quick Search Options</h3>
     
@@ -81,7 +88,7 @@
 			</div>
 =======
         <!-- Full-width images with number and caption text -->
-        <div class="mySlides fade">
+        <!-- <div class="mySlides fade">
           <div class="numbertext">1 / 3</div>
           <img src="{{ MEDIA_URL }}img1.jpg" style="width:100%">
           <div class="text">Harry Potter</div>
@@ -97,7 +104,7 @@
           <div class="numbertext">3 / 3</div>
           <img src="{{ MEDIA_URL }}img3.jpg" style="width:100%">
           <div class="text">Home Alone</div>
-        </div>
+        </div> -->
 >>>>>>> 74951a74d9ac02fc1f040305de405425dbf9f9fd
       
 			<!-- Next and previous buttons -->
@@ -114,11 +121,11 @@
 		</div>
 
 
+		
+		<<<<<<< HEAD
 		<h3>Popular TV Shows</h3>
 	
 		<div class="slideshow-container">
-
-<<<<<<< HEAD
 			<!-- Full-width images with number and caption text -->
 			<div class="mySlides fade">
 				<div class="numbertext">1 / 3</div>
@@ -144,10 +151,10 @@
 		</div>
 		<br>
 =======
-      <div class="slideshow-container">
+      <!-- <div class="slideshow-container">
 
         <!-- Full-width images with number and caption text -->
-        <div class="mySlides fade">
+        <!-- <div class="mySlides fade">
           <div class="numbertext">1 / 3</div>
           <img src="{{ MEDIA_URL }}img4.jpg" style="width:100%">
           <div class="text">Breaking Bad</div>
@@ -163,7 +170,7 @@
           <div class="numbertext">3 / 3</div>
           <img src="{{ MEDIA_URL }}img6.jpg" style="width:100%">
           <div class="text">Game of Thrones</div>
-        </div>
+        </div> --> -->
 >>>>>>> 74951a74d9ac02fc1f040305de405425dbf9f9fd
       
 		<!-- The dots/circles -->
