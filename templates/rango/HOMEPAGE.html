@@ -9,12 +9,6 @@
 
 {% block body_block %}
 
-		<div>
-			{% if user.is_authenticated %}
-				<p> Hi {{ user.username }}! </p>
-			{% endif %}
-		</div>
-
 		<form id="form"> 
 			<input type="search" id="query" name="q" placeholder="Search...">
 			<button>Search</button>
