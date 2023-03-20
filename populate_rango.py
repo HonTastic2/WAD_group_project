@@ -4,7 +4,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'WAD_group_project.settings')
 
 import django
 django.setup()
-from rango.models import Category, Page
+from rango.models import Movie, Page
 
 def populate():
     
@@ -30,19 +30,19 @@ def populate():
     {'title':'Flask',
     'url':'http://flask.pocoo.org'} ]
     
-    cats = {'Python': {'pages': python_pages},'Django': {'pages': django_pages}, 'Other Frameworks': {'pages': other_pages} }
+    movies = {'Harry Potter': {'pages': python_pages},'Cars': {'pages': django_pages}, 'Home Alone': {'pages': other_pages} }
     
-    for cat, cat_data in cats.items():
-        if (cat=='Python'):
-            c = add_cat(cat, 128, 64)
-        elif (cat=='Django'):
-            c = add_cat(cat, 64, 32)
-        elif (cat =='Other Frameworks'):
-            c = add_cat(cat, 32, 16)
-        for p in cat_data['pages']:
+    for movie, movie_data in movies.items():
+        if (movie=='Harry Potter'):
+            c = add_movie(movie, '1982-01-20')
+        elif (movie=='Cars'):
+            c = add_movie(movie, '1972-02-30')
+        elif (movie=='Home Alone'):
+            c = add_movie(movie, '1986-03-10')
+        for p in movie_data['pages']:
             add_page(c, p['title'], p['url'], random.randint(1,500))
           
-    for c in Category.objects.all():
+    for c in Movie.objects.all():
         for p in Page.objects.filter(category=c):
             print(f'- {c}: {p}')
             
@@ -53,10 +53,9 @@ def add_page(cat, title, url, views=0):
     p.save()
     return p
     
-def add_cat(name, views=0, likes=0):
-    c = Category.objects.get_or_create(name=name)[0]
-    c.likes=likes
-    c.views=views
+def add_movie(title, releaseDate):
+    c = Movie.objects.get_or_create(title=title)[0]
+    c.releaseDate=releaseDate
     c.save()
     return c
     
